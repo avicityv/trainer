@@ -9,6 +9,10 @@ app = Flask(__name__) # Создаем приложение. __name__ - назв
 
 session = Session(engine) # Cессия для работы с бд
 
+@app.before_first_request
+def create_tables():
+    db.create_all()
+
 def get_data_from_user() -> list[User]:
     stmt: list[User] = session.query(User).all() # Запрос всех данных из таблицы с пользователями
     # stmt это список с классом пользователя внутри
