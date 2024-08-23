@@ -9,7 +9,7 @@ app = Flask(__name__) # Создаем приложение. __name__ - назв
 
 session = Session(engine) # Cессия для работы с бд
 
-@before_request
+@app.before_request
 def create_tables():
     db.create_all()
 
