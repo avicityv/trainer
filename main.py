@@ -1,5 +1,4 @@
 from flask import Flask, Request, render_template
-import importlib
 from engine import engine
 from models import User
 from sqlalchemy import select
@@ -8,10 +7,6 @@ from sqlalchemy.orm import Session
 app = Flask(__name__) # Создаем приложение. __name__ - название файла
 
 session = Session(engine) # Cессия для работы с бд
-
-@app.before_request
-def create_tables():
-    db.create_all()
 
 def get_data_from_user() -> list[User]:
     stmt: list[User] = session.query(User).all() # Запрос всех данных из таблицы с пользователями
@@ -25,9 +20,8 @@ def main() -> Request:
     return render_template('data_page.html', users=users) 
 
 if __name__ == '__main__':
-    print(importlib.metadata.version("sqlalchemy"))
     # Запуск приложения
-    app.run(host ='0.0.0.0', port = 5001, debug = True)  
+    app.run(debug=True)
 
 # Чтобы запустить:
 # 1: .\.venv\Scripts\activate
